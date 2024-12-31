@@ -1,0 +1,8 @@
+# Ignore large files
+similarity.plk
+similarity.plknaif8o2z.part
+movies.plk
+
+# Ignore virtual environments
+new_venv/
+.venv/
