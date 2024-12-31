@@ -2,10 +2,29 @@ import streamlit as st
 import pickle
 import pandas as pd
 import requests
+import os
+import gdown
 
-# Load the .pkl files
-movies_list = pickle.load(open('movies.plk', 'rb'))
-similarity = pickle.load(open('similarity.plk', 'rb'))
+# Define file paths
+movies_file = 'movies.plk'
+similarity_file = 'similarity.plk'
+
+# Google Drive URLs for the .pkl files
+movies_plk_url = 'https://drive.google.com/uc?export=download&id=1LZ5l-0RqlI7f1p6RJQIudUS9OTmkigcC'
+similarity_plk_url = 'https://drive.google.com/uc?export=download&id=1kxzHcriYhuoOp6u3MzDC2kMCOMu6NWx1'
+
+# Check if files are already downloaded, if not, download them
+if not os.path.exists(movies_file):
+    st.write("Downloading movies.plk file...")
+    gdown.download(movies_plk_url, movies_file, quiet=False)
+
+if not os.path.exists(similarity_file):
+    st.write("Downloading similarity.plk file...")
+    gdown.download(similarity_plk_url, similarity_file, quiet=False)
+
+# Load the .pkl files after downloading them
+movies_list = pickle.load(open(movies_file, 'rb'))
+similarity = pickle.load(open(similarity_file, 'rb'))
 
 # TMDB API Key
 API_KEY = "ffec32b4a92eff6bebd735bb78c101ec"
@@ -66,4 +85,8 @@ if st.button("Recommend"):
                 st.image(posters[idx], use_container_width=True)  # Use container width instead
             else:
                 st.text("Poster not available")  # Display message if poster is not available
+
+
+
+
 
